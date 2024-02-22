@@ -84,8 +84,7 @@ if (isset($_GET['action'])) {
             break;
 
         default:
-            // Gestion d'autres actions
-            break;
+        break;
     }
 }
 
