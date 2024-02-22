@@ -85,3 +85,32 @@ function prodata_activate() {
 
 // Enregistrez la fonction d'activation du plugin
 register_activation_hook(__FILE__, 'prodata_activate');
+
+function prodata_clients_shortcode($atts) {
+    // Définissez les paramètres par défaut
+    $atts = shortcode_atts(
+        array(
+            'nombre' => 5, // Exemple : afficher les 5 premiers clients
+        ),
+        $atts,
+        'prodata_clients'
+    );
+
+    $nombre_clients = intval($atts['nombre']);
+
+    ob_start(); // Commence la mise en tampon de sortie
+    liste_prodata();
+    return ob_get_clean(); // Termine la mise en tampon de sortie et renvoie le contenu
+}
+add_shortcode('prodata_clients', 'prodata_clients_shortcode');
+
+function liste_prodata(){
+    include 'affichage_prodata.php';
+}
+
+// Enqueue CSS styles in WordPress
+function enqueue_plugin_styles() {
+    $css_url = plugins_url('css', __FILE__);
+    wp_enqueue_style('style2', $css_url . '/style.css', array(), null, 'all');
+}
+add_action('wp_enqueue_scripts', 'enqueue_plugin_styles');
