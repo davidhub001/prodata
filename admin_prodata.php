@@ -9,7 +9,10 @@
 
             <input type="submit" value="Ajouter Groupe">
     </form>
+
     <?php 
+    display_groupes_list();
+
     endif;
     if($_REQUEST["page"] == "prodata_clients"):
     ?>
@@ -28,9 +31,21 @@
 
         <label for="groupe">Groupe :</label>
         <select id="groupe" name="groupe" required>
-            <option value="groupe1">Groupe 1</option>
-            <option value="groupe2">Groupe 2</option>
-            <!-- Ajoutez d'autres options selon vos besoins -->
+            <?php 
+                $groupes = get_groupes();
+
+                if ($groupes) {
+                    foreach ($groupes as $groupe) {
+                        ?>
+                            <option value="<?=$groupe['groupe_id']?>"><?=$groupe['nom_groupe']?></option>
+                        <?php
+                    }
+                } else {
+                    ?>
+                        <option value="0"></option>
+                    <?php
+                }
+            ?>
         </select>
 
         <label for="photo">Photo de profil :</label>
@@ -41,7 +56,9 @@
 
         <input type="submit" value="Soumettre">
     </form>
+    
     <?php 
+    display_clients_list();
     endif;
 
     if($_REQUEST["page"] == "prodata_admin"):

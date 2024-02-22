@@ -55,14 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $prenom = sanitize_text_field($_POST["prenom"]);
     $email = sanitize_email($_POST["email"]);
     $telephone = sanitize_text_field($_POST["telephone"]);
-    
+
     $photo = esc_url($_POST["photo"]); // Assurez-vous que la photo est une URL
     $couverture = esc_url($_POST["couverture"]); // Assurez-vous que la couverture est une URL
     $groupe_id = intval($_POST["groupe_id"]); // Assurez-vous que le groupe_id est un entier
-
-    // Validez les données ici
-
-    // Insérez les données dans la base de données
     insert_client(array(
         'nom' => $nom,
         'prenom' => $prenom,
@@ -73,3 +69,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'groupe_id' => $groupe_id,
     ));
 }
+function display_clients_list() {
+    $clients = get_clients();
+
+    if ($clients) {
+        echo '<ul>';
+        foreach ($clients as $client) {
+            echo '<li>';
+            echo 'Nom: ' . $client['nom'] . ', Prénom: ' . $client['prenom'] . ', Email: ' . $client['email'];
+            echo '<a href="?page=prodata_clients&action=edit_client&id=' . $client['id'] . '">Modifier</a>';
+            echo '<a href="?page=prodata_clients&action=delete_client&id=' . $client['id'] . '">Supprimer</a>';
+            echo '</li>';
+        }
+        echo '</ul>';
+    } else {
+        echo 'Aucun client trouvé.';
+    }
+}
+
+if (isset($_GET['action'])) {
+    $action = $_GET['action'];
+
+    switch ($action) {
+        case 'edit_client':
+            if (isset($_GET['id'])) {
+                $client_id = intval($_GET['id']);
+            }
+            break;
+
+        case 'delete_client':
+            if (isset($_GET['id'])) {
+                $client_id = intval($_GET['id']);
+                delete_client($client_id);
+                
+            }
+            break;
+
+
+        default:
+            break;
+    }
+}
+
