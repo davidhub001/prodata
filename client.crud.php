@@ -56,10 +56,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $prenom = sanitize_text_field($_POST["prenom"]);
         $email = sanitize_email($_POST["email"]);
         $telephone = sanitize_text_field($_POST["telephone"]);
+        $photo = " ";
+        $couverture = " ";
 
-        $photo = esc_url($_POST["photo"]); // Assurez-vous que la photo est une URL
-        $couverture = esc_url($_POST["couverture"]); // Assurez-vous que la couverture est une URL
-        $groupe_id = intval($_POST["groupe_id"]); // Assurez-vous que le groupe_id est un entier
+        $groupe_id = intval($_POST["groupe_id"]); 
+        $photo = "test.png";
+        $couverture = "test.png";
+        if(upload_image($_FILES, "photo")){
+            $photo = upload_image($_FILES, "photo");
+        }
+        if(upload_image($_FILES, "couverture")){
+            $couverture = upload_image($_FILES, "couverture");
+        }
         insert_client(array(
             'nom' => $nom,
             'prenom' => $prenom,
@@ -71,12 +79,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ));
     endif;
 }
+function upload_image($data, $champ){
+    if (isset($data[$champ]) && $data[$champ]['error'] === 0) {
+        $file = $data[$champ];
+
+        $allowed_extensions = array('jpg', 'jpeg', 'png', 'gif');
+        $file_info = pathinfo($file['name']);
+        $file_extension = strtolower($file_info['extension']);
+        if (!in_array($file_extension, $allowed_extensions, true)) {
+            wp_send_json_error('Type de fichier non pris en charge');
+        }
+
+        $path = __DIR__.'/images';
+        $file_name = $file['name'];
+        $file_path = trailingslashit($path) . $file_name;
+        move_uploaded_file($file['tmp_name'], $file_path);
+        return $file_name;
+        // wp_send_json_success(array('file_path' => $file_path));
+    } else {
+        // wp_send_json_error('Aucun fichier téléchargé');
+        return false;
+    }
+}
 function display_clients_list() {
     $clients = get_clients();
 
     if ($clients) {
         echo '<table>';
         echo '<tr>';
+        echo '<th>Photo</th>';
         echo '<th>Nom</th>';
         echo '<th>Prénom</th>';
         echo '<th>Email</th>';
@@ -85,6 +116,7 @@ function display_clients_list() {
         foreach ($clients as $client) {
            
             echo '<tr>';
+            echo '<td><img class="img_prodata" src="'. plugins_url("prodata/images/").$client["photo"]. '" ></td>';
             echo '<td>' . $client['nom'] . '</td>';
             echo '<td>' . $client['prenom'] . '</td>';
             echo '<td>' . $client['email'] . '</td>';

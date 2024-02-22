@@ -30,7 +30,7 @@
         <input type="tel" id="telephone" name="telephone" required>
 
         <label for="groupe">Groupe :</label>
-        <select id="groupe" name="groupe" required>
+        <select id="groupe_id" name="groupe_id" required>
             <?php 
                 $groupes = get_groupes();
 
@@ -49,10 +49,10 @@
         </select>
 
         <label for="photo">Photo de profil :</label>
-        <input type="file" id="photo" name="photo" accept="image/*" required>
+        <input type="file" id="photo" name="photo" accept="image/*" >
 
         <label for="couverture">Photo de couverture :</label>
-        <input type="file" id="couverture" name="couverture" accept="image/*" required>
+        <input type="file" id="couverture" name="couverture" accept="image/*" >
 
         <input type="submit" value="Soumettre">
     </form>
