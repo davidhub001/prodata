@@ -3,7 +3,7 @@
     <?php 
     if($_REQUEST["page"] == "prodata_groupes"):
     ?>
-    <form action="#" method="post">
+    <form action="admin.php?page=prodata_groupes&option=insertgroup" method="post">
             <label for="nomGroupe">Nom du Groupe :</label>
             <input type="text" id="nomGroupe" name="nomGroupe" required>
 
@@ -16,7 +16,7 @@
     endif;
     if($_REQUEST["page"] == "prodata_clients"):
     ?>
-    <form action="#" method="post" enctype="multipart/form-data">
+    <form action="admin.php?page=prodata_clients&option=insertclient" method="post" enctype="multipart/form-data">
         <label for="nom">Nom :</label>
         <input type="text" id="nom" name="nom" required>
 

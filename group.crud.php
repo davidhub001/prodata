@@ -42,8 +42,10 @@ function get_groupes() {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom_groupe = sanitize_text_field($_POST["nomGroupe"]);
-    insert_groupe(array('nom_groupe' => $nom_groupe));
+    if($_REQUEST["option"] =="insertgroup"):
+        $nom_groupe = sanitize_text_field($_POST["nomGroupe"]);
+        insert_groupe(array('nom_groupe' => $nom_groupe));
+    endif;
 }
 
 function display_groupes_list() {

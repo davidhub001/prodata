@@ -51,37 +51,53 @@ function insert_client($data) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nom = sanitize_text_field($_POST["nom"]);
-    $prenom = sanitize_text_field($_POST["prenom"]);
-    $email = sanitize_email($_POST["email"]);
-    $telephone = sanitize_text_field($_POST["telephone"]);
+    if($_REQUEST["option"] =="insertclient"):
+        $nom = sanitize_text_field($_POST["nom"]);
+        $prenom = sanitize_text_field($_POST["prenom"]);
+        $email = sanitize_email($_POST["email"]);
+        $telephone = sanitize_text_field($_POST["telephone"]);
 
-    $photo = esc_url($_POST["photo"]); // Assurez-vous que la photo est une URL
-    $couverture = esc_url($_POST["couverture"]); // Assurez-vous que la couverture est une URL
-    $groupe_id = intval($_POST["groupe_id"]); // Assurez-vous que le groupe_id est un entier
-    insert_client(array(
-        'nom' => $nom,
-        'prenom' => $prenom,
-        'email' => $email,
-        'telephone' => $telephone,
-        'photo' => $photo,
-        'couverture' => $couverture,
-        'groupe_id' => $groupe_id,
-    ));
+        $photo = esc_url($_POST["photo"]); // Assurez-vous que la photo est une URL
+        $couverture = esc_url($_POST["couverture"]); // Assurez-vous que la couverture est une URL
+        $groupe_id = intval($_POST["groupe_id"]); // Assurez-vous que le groupe_id est un entier
+        insert_client(array(
+            'nom' => $nom,
+            'prenom' => $prenom,
+            'email' => $email,
+            'telephone' => $telephone,
+            'photo' => $photo,
+            'couverture' => $couverture,
+            'groupe_id' => $groupe_id,
+        ));
+    endif;
 }
 function display_clients_list() {
     $clients = get_clients();
 
     if ($clients) {
-        echo '<ul>';
+        echo '<table>';
+        echo '<tr>';
+        echo '<th>Nom</th>';
+        echo '<th>Prénom</th>';
+        echo '<th>Email</th>';
+        echo '<th>Action</th>';
+        echo '</tr>';
         foreach ($clients as $client) {
-            echo '<li>';
-            echo 'Nom: ' . $client['nom'] . ', Prénom: ' . $client['prenom'] . ', Email: ' . $client['email'];
+           
+            echo '<tr>';
+            echo '<td>' . $client['nom'] . '</td>';
+            echo '<td>' . $client['prenom'] . '</td>';
+            echo '<td>' . $client['email'] . '</td>';
+            echo '<td>';
+            echo '<div class="buttons">';
             echo '<a href="?page=prodata_clients&action=edit_client&id=' . $client['id'] . '">Modifier</a>';
             echo '<a href="?page=prodata_clients&action=delete_client&id=' . $client['id'] . '">Supprimer</a>';
-            echo '</li>';
+            echo '</div>';
+            echo '</td>';
+            echo '</tr>';
+
         }
-        echo '</ul>';
+        echo '</table>';
     } else {
         echo 'Aucun client trouvé.';
     }

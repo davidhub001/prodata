@@ -1,11 +1,14 @@
 #prodata{
     margin: 20px;
-    form {
+    display: flex;
+    align-items: flex-start;
+    form, table,ul {
         background-color: #fff;
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         width: 400px;
+        margin: 20px;
     }
 
     label {
@@ -33,4 +36,48 @@
     input[type="submit"]:hover {
         background-color: #45a049;
     }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    li {
+        border: 1px solid #ddd;
+        margin: 5px;
+        padding: 10px;
+        position: relative;
+    }
+    a {
+        display: inline-block;
+        margin-left: 10px;
+        text-decoration: none;
+        padding: 5px 10px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 3px;
+        transition: background-color 0.3s;
+    }
+
+    a:hover {
+        background-color: #45a049;
+    }
+    a.delete {
+        background-color: #f44336;
+    }
+
+    a.delete:hover {
+        background-color: #d32f2f;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 10px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
 }
