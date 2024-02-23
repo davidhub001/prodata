@@ -42,9 +42,11 @@ function get_groupes() {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if($_REQUEST["option"] =="insertgroup"):
-        $nom_groupe = sanitize_text_field($_POST["nomGroupe"]);
-        insert_groupe(array('nom_groupe' => $nom_groupe));
+    if(array_key_exists("option",$_REQUEST)):
+        if($_REQUEST["option"] =="insertgroup"):
+            $nom_groupe = sanitize_text_field($_POST["nomGroupe"]);
+            insert_groupe(array('nom_groupe' => $nom_groupe));
+        endif;
     endif;
 }
 
