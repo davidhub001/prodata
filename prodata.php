@@ -7,6 +7,7 @@ Author: david
 */
 require_once plugin_dir_path(__FILE__) . 'client.crud.php';
 require_once plugin_dir_path(__FILE__) . 'group.crud.php';
+require_once plugin_dir_path(__FILE__) . 'join_client_groupes.php';
 require_once plugin_dir_path(__FILE__) . 'action_prodata.php';
 
 function prodata_page() {
@@ -71,26 +72,30 @@ register_activation_hook(__FILE__, 'prodata_activate');
 function prodata_clients_shortcode($atts) {
     $atts = shortcode_atts(
         array(
-            'nombre' => 5, 
+            'groupe' => 5, 
         ),
         $atts,
         'prodata_clients'
     );
 
-    $nombre_clients = intval($atts['nombre']);
-
+    $groupe = intval($atts['groupe']);
+    $jsonData = json_decode(file_get_contents(admin_url('admin-ajax.php?action=prodata_retourne_json&id_groupe='.$groupe)));
     ob_start();
-    liste_prodata();
+    include 'affichage_prodata.php';
     return ob_get_clean();
 }
 add_shortcode('prodata_clients', 'prodata_clients_shortcode');
 
-function liste_prodata(){
-    include 'affichage_prodata.php';
-}
 
 function enqueue_plugin_styles() {
     $css_url = plugins_url('css', __FILE__);
     wp_enqueue_style('style2', $css_url . '/style.css', array(), null, 'all');
 }
 add_action('wp_enqueue_scripts', 'enqueue_plugin_styles');
+
+function prodata_retourne_json() {
+    $data =  get_clients_group($_GET["id_groupe"]);
+    wp_send_json($data);
+}
+add_action('wp_ajax_prodata_retourne_json', 'prodata_retourne_json');
+add_action('wp_ajax_nopriv_prodata_retourne_json', 'prodata_retourne_json');

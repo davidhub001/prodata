@@ -67,5 +67,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 'groupe_id' => $groupe_id,
             ));
         endif;
+        if($_REQUEST["option"] =="liste_data_select"):
+           $GLOBALS["prodata_liste"] = get_clients_group($_POST["liste_data_select"]);
+        endif;
     endif;
 }

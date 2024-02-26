@@ -65,7 +65,7 @@
 
         $data = get_groupes();
         ?>
-        <form action="admin.php?page=prodata_admin&option=liste_data" method="post" enctype="multipart/form-data">
+        <form action="admin.php?page=prodata_admin&option=liste_data_select" method="post" enctype="multipart/form-data">
 
             <select name="liste_data_select" id="liste_data_select"><?php 
             foreach($data as $cle => $val){
@@ -75,8 +75,36 @@
             }
             ?></select>
             <input type="submit" value="Ok">
+            <pre>[prodata_clients groupe="<?=@$_POST['liste_data_select']?>"]</pre>
         </form>
         <?php 
+            if(isset($GLOBALS["prodata_liste"])):
+        ?>
+        <table>
+            <tr>
+                <th>nom</th>
+                <th>prenom</th>
+                <th>email</th>
+                <th>telephone</th>
+                <th>Groupe</th>
+            </tr>
+            <?php 
+                foreach($GLOBALS["prodata_liste"] as $val):
+            ?>
+            <tr>
+                <td><?=$val['nom']?></td>
+                <td><?=$val['prenom']?></td>
+                <td><?=$val['email']?></td>
+                <td><?=$val['telephone']?></td>
+                <td><?=$val['nom_groupe']?></td>
+            </tr>
+            <?php
+                endforeach;
+            ?>
+        </table>
+
+        <?php 
+        endif;
     endif;
     ?>
 </div>

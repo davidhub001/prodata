@@ -1,11 +1,11 @@
 <div id="liste_collectif">
 <?php
-    $jsonData = json_decode(file_get_contents(plugins_url('default_data/data/data_collectif.json', __FILE__)), true);
-    foreach ($jsonData as $user) {
+    foreach ($jsonData as $_user) {
+        $user = (array)$_user;
         ?>
         <div class="user-box">
-            <div class="user-image" style="background-image: url('<?=plugins_url('default_data/images/'.$user['couverture'], __FILE__)?>');"></div>
-            <img src="<?=plugins_url('default_data/images/'.$user['photo'], __FILE__)?>" alt="User Photo">
+            <div class="user-image" style="background-image: url('<?=plugins_url('images/'.$user['couverture'], __FILE__)?>');"></div>
+            <img src="<?=plugins_url('images/'.$user['photo'], __FILE__)?>" alt="User Photo">
             <div class="user-info">
                 <h2><?=$user['nom']?>&nbsp;<?=$user['prenom']?></h2>
                 <p>Email:&nbsp;<?=$user['email']?></p>
