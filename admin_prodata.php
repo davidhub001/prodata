@@ -62,7 +62,21 @@
     endif;
 
     if($_REQUEST["page"] == "prodata_admin"):
-        echo "liste des client";
+
+        $data = get_groupes();
+        ?>
+        <form action="admin.php?page=prodata_admin&option=liste_data" method="post" enctype="multipart/form-data">
+
+            <select name="liste_data_select" id="liste_data_select"><?php 
+            foreach($data as $cle => $val){
+                $id = $val['groupe_id'];
+                $nom = $val['nom_groupe'];
+                echo "<option value='$id'>$nom</option>";
+            }
+            ?></select>
+            <input type="submit" value="Ok">
+        </form>
+        <?php 
     endif;
     ?>
 </div>

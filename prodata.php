@@ -7,6 +7,7 @@ Author: david
 */
 require_once plugin_dir_path(__FILE__) . 'client.crud.php';
 require_once plugin_dir_path(__FILE__) . 'group.crud.php';
+require_once plugin_dir_path(__FILE__) . 'action_prodata.php';
 
 function prodata_page() {
     include "admin_prodata.php";

@@ -41,15 +41,6 @@ function get_groupes() {
     return $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if(array_key_exists("option",$_REQUEST)):
-        if($_REQUEST["option"] =="insertgroup"):
-            $nom_groupe = sanitize_text_field($_POST["nomGroupe"]);
-            insert_groupe(array('nom_groupe' => $nom_groupe));
-        endif;
-    endif;
-}
-
 function display_groupes_list() {
     $groupes = get_groupes();
 
@@ -67,26 +58,3 @@ function display_groupes_list() {
         echo 'Aucun groupe trouvé.';
     }
 }
-
-if (isset($_GET['action'])) {
-    $action = $_GET['action'];
-
-    switch ($action) {
-        case 'edit_groupe':
-            if (isset($_GET['id'])) {
-                $groupe_id = intval($_GET['id']);
-            }
-            break;
-
-        case 'delete_groupe':
-            if (isset($_GET['id'])) {
-                $groupe_id = intval($_GET['id']);
-                delete_groupe($groupe_id);
-            }
-            break;
-
-        default:
-        break;
-    }
-}
-
