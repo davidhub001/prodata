@@ -10,8 +10,9 @@
                 <h2><?=$user['nom']?>&nbsp;<?=$user['prenom']?></h2>
                 <p>Email:&nbsp;<?=$user['email']?></p>
                 <p>Téléphone:&nbsp;<?=$user['telephone']?></p>
+                
             </div>
-            <button class="connect-btn">Contacter</button>
+            <button class="connect-btn" onclick="afficherPopup()">Contacter</button>
         </div>
         <?php
     }

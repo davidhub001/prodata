@@ -18,6 +18,15 @@ function mon_plugin_enqueue_styles() {
     wp_enqueue_style('mon-plugin-styles', plugins_url('css/style.css', __FILE__));
 }
 
+function enqueue_plugin_styles() {
+    $css_url = plugins_url('css', __FILE__);
+    $js_url = plugins_url('js', __FILE__);
+    wp_enqueue_style('style2', $css_url . '/style.css', array(), null, 'all');
+    wp_enqueue_script('script', $js_url . '/script.js', array('jquery'), '1.0', true);
+    wp_localize_script('script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+}
+add_action('wp_enqueue_scripts', 'enqueue_plugin_styles');
+
 function prodata_menu() {
     add_menu_page(
         'Prodata',          // Titre de la page
@@ -85,13 +94,6 @@ function prodata_clients_shortcode($atts) {
     return ob_get_clean();
 }
 add_shortcode('prodata_clients', 'prodata_clients_shortcode');
-
-
-function enqueue_plugin_styles() {
-    $css_url = plugins_url('css', __FILE__);
-    wp_enqueue_style('style2', $css_url . '/style.css', array(), null, 'all');
-}
-add_action('wp_enqueue_scripts', 'enqueue_plugin_styles');
 
 function prodata_retourne_json() {
     $data =  get_clients_group($_GET["id_groupe"]);
