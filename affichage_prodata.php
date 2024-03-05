@@ -12,7 +12,7 @@
                 <p>Téléphone:&nbsp;<?=$user['telephone']?></p>
                 
             </div>
-            <button class="connect-btn" onclick="afficherPopup()">Contacter</button>
+            <button class="connect-btn" onclick="afficherPopup(<?=$user['id']?>)">Contacter</button>
         </div>
         <?php
     }

@@ -16,3 +16,8 @@ CREATE TABLE IF NOT EXISTS wp_groupes (
     nom_groupe varchar(255) NOT NULL,
     PRIMARY KEY  (groupe_id)
 ) DEFAULT CHARSET=utf8mb4;
+CREATE TABLE IF NOT EXISTS wp_client_contact (
+    `id` INT NOT NULL AUTO_INCREMENT , 
+    `description` TEXT NOT NULL , 
+    `id_client` INT NOT NULL , 
+    PRIMARY KEY (`id`)) ENGINE = InnoDB;

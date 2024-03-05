@@ -108,3 +108,9 @@
     endif;
     ?>
 </div>
+<div class="liste_prodata">
+    <h2>Contact reçu</h2>
+    <?php
+        var_dump(get_cc());
+    ?>
+</div>

@@ -173,21 +173,31 @@
     transform: translate(-50%, -50%);
     z-index: 9999;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    height: 70%;
+    span{
+            float: right;
+            cursor: pointer;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+    input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+    }
 }
 
-.popup-container label {
-    display: block;
-    margin-bottom: 5px;
+.liste_prodata{
+    margin: 20px;
 }
-
-.popup-container input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-}
-
-.popup-container input[type="submit"] {
-    background-color: #4caf50;
-    color: white;
-    cursor: pointer;
+.prodata_desactive_body{
+    // pointer-events: none;
 }

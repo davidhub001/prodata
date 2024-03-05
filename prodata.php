@@ -9,6 +9,7 @@ require_once plugin_dir_path(__FILE__) . 'client.crud.php';
 require_once plugin_dir_path(__FILE__) . 'group.crud.php';
 require_once plugin_dir_path(__FILE__) . 'join_client_groupes.php';
 require_once plugin_dir_path(__FILE__) . 'action_prodata.php';
+require_once plugin_dir_path(__FILE__) . 'client_contact.crud.php';
 
 function prodata_page() {
     include "admin_prodata.php";
@@ -23,7 +24,7 @@ function enqueue_plugin_styles() {
     $js_url = plugins_url('js', __FILE__);
     wp_enqueue_style('style2', $css_url . '/style.css', array(), null, 'all');
     wp_enqueue_script('script', $js_url . '/script.js', array('jquery'), '1.0', true);
-    wp_localize_script('script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+    wp_localize_script('script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php?action=prodata_traiter_formulaire')));
 }
 add_action('wp_enqueue_scripts', 'enqueue_plugin_styles');
 
@@ -99,5 +100,16 @@ function prodata_retourne_json() {
     $data =  get_clients_group($_GET["id_groupe"]);
     wp_send_json($data);
 }
+function prodata_traiter_formulaire(){
+    $data = ['id_client'=>@$_POST["id_client"],
+                    'description'=>array(@$_POST["nom"], @$_POST["email"])];
+    insert_cc($data);
+    $data = "Client contacter";
+    wp_send_json($data);
+}
+add_action('wp_ajax_prodata_traiter_formulaire', 'prodata_traiter_formulaire');
+add_action('wp_ajax_nopriv_prodata_traiter_formulaire', 'prodata_traiter_formulaire');
+
 add_action('wp_ajax_prodata_retourne_json', 'prodata_retourne_json');
 add_action('wp_ajax_nopriv_prodata_retourne_json', 'prodata_retourne_json');
+?>
